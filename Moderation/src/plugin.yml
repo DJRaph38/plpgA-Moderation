@@ -1,0 +1,18 @@
+main: fr.assaut.moderation.Main
+name: Moderation
+version: 1.0
+author: Raph
+description: Plugin de Moderation
+commands:
+   avert:
+      description: avertir un joueur
+   mkick:
+      description: kicker un joueur
+   mban:
+      description: bannir un joueur
+   mmute:
+      description: faire taire un joueur
+   report:
+      description: Signaler un comportement inadequat
+   herve:
+      description: surprise
