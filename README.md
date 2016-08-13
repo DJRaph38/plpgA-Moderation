@@ -1,0 +1,2 @@
+# plpgA-Moderation
+Plugin moderation
