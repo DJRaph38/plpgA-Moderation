@@ -1,5 +1,6 @@
 package fr.assaut.moderation;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -8,6 +9,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin{
 
+	
+	
+	
 	public void onEnable(){
 		getLogger().info("Plugin Moderation ON !");
 		
@@ -21,6 +25,9 @@ public class Main extends JavaPlugin{
 		getCommand("herve").setExecutor(herve);
 		
 		//CONNEXION D'UN MODERATEUR, ADMIN, SM, YOUTUBEUR A AJOUTER
+		Bukkit.getPluginManager().registerEvents(new PluginListener(),this); //************************************************* HERE WE GO
+		
+		
 	}
 	
 	
