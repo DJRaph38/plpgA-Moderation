@@ -4,14 +4,8 @@ version: 1.0
 author: Raph
 description: Plugin de Moderation
 commands:
-   avert:
-      description: avertir un joueur
-   mkick:
-      description: kicker un joueur
-   mban:
-      description: bannir un joueur
-   mmute:
-      description: faire taire un joueur
+   mod:
+      description: Outils de moderation avert ban kick mute
    report:
       description: Signaler un comportement inadequat
    herve:

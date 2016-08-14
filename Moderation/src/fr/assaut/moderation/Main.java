@@ -11,17 +11,8 @@ public class Main extends JavaPlugin{
 	public void onEnable(){
 		getLogger().info("Plugin Moderation ON !");
 		
-		CommandExecutor avert = new ModAvert(); //AVERT
-		getCommand("avert").setExecutor(avert);
-		
-		CommandExecutor c2 = new ModMute();//MUTE
-		getCommand("mmute").setExecutor(c2);
-		
-		CommandExecutor c3 = new ModBan();//BAN
-		getCommand("mban").setExecutor(c3);
-		
-		CommandExecutor c4 = new ModKick();//KICK
-		getCommand("mkick").setExecutor(c4);
+		CommandExecutor modo = new Mod(); //COMMANDES MODERATION
+		getCommand("mod").setExecutor(modo);
 		
 		CommandExecutor report = new ReportCommand();//REPORT
 		getCommand("report").setExecutor(report);
