@@ -1,6 +1,10 @@
 package fr.assaut.moderation;
 
+import java.io.File;
+
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,6 +12,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PluginListener implements Listener {
 
+	File configFile = new File("plugin/Moderation/PlayerConfig.yml");
+	FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e){
 		Player p = e.getPlayer();
@@ -20,9 +27,21 @@ public class PluginListener implements Listener {
 	    }else if(p.hasPermission("moderation.developper")){
 	    	e.setJoinMessage(ChatColor.GREEN+"Le développeur "+e.getPlayer().getName()+" est connecté !");
 	    }else{
-			e.setJoinMessage(ChatColor.GOLD+"Bienvenue à "+e.getPlayer().getName()+" pour sa première connexion sur le serveur !");
+			String uuid = p.getUniqueId().toString();
+			if(config.contains(uuid)){
+				p.sendMessage(ChatColor.GOLD+"Bienvenue sur Assault v1.0 ! Bon jeu à toi !");
+			}else{
+				try{
+					config.set(uuid,1);
+					config.save(configFile);
+					//CONFIG NE MARCHE PAS
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
+			}
 		}
 	}//ONPLAYERJOIN
+
 	
 	
 }

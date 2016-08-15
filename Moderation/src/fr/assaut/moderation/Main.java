@@ -11,7 +11,6 @@ public class Main extends JavaPlugin{
 
 	
 	
-	
 	public void onEnable(){
 		getLogger().info("Plugin Moderation ON !");
 		
@@ -26,8 +25,7 @@ public class Main extends JavaPlugin{
 		
 		//CONNEXION D'UN MODERATEUR, ADMIN, SM, YOUTUBEUR A AJOUTER
 		Bukkit.getPluginManager().registerEvents(new PluginListener(),this); //************************************************* HERE WE GO
-		
-		
+
 	}
 	
 	
