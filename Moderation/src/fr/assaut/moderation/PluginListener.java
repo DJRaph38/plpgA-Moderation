@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PluginListener implements Listener {
 
-	File configFile = new File("plugin/Moderation/PlayerConfig.yml");
+	File configFile = new File("plugins/Moderation/PlayerConfig.yml");
 	FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
 	
 	@EventHandler
