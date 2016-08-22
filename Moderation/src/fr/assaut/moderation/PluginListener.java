@@ -8,6 +8,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PluginListener implements Listener {
@@ -42,6 +44,22 @@ public class PluginListener implements Listener {
 		}
 	}//ONPLAYERJOIN
 
+	@EventHandler
+	public void onPlayerBreak(BlockBreakEvent f){
+		Player p = f.getPlayer();
+		if(!(p.isOp())){
+			f.setCancelled(true);
+			p.sendMessage(ChatColor.DARK_RED+"Vous ne pouvez pas effectuer cette action.");
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerTouch(BlockDamageEvent g){
+		Player p = g.getPlayer();
+		if(!(p.isOp())){
+			g.setCancelled(true);
+		}
+	}
 	
 	
 }
