@@ -54,7 +54,16 @@ public class Mod implements CommandExecutor {
 										pls.sendMessage(ChatColor.DARK_PURPLE+p.getName()+" a donné un avertissement à "+target.getName()+" pour "+args[2]);
 									}
 								}
-								target.sendMessage(ChatColor.RED+"Vous avez reçu un avertissement pour "+args[2]);
+								//alias
+								if(args[2].equalsIgnoreCase("LI")){
+									target.sendMessage(ChatColor.RED+"Vous avez reçu un avertissement pour langage inapproprié");
+								}else if(args[2].equalsIgnoreCase("ECT")){
+									target.sendMessage(ChatColor.RED+"Vous avez reçu un avertissement pour Evocation de Cheat dans le Chat");
+								}else if(args[2].equalsIgnoreCase("ACT")){
+									target.sendMessage(ChatColor.RED+"Vous avez reçu un avertissement pour Accusation de Cheat dans le Chat");
+								}else{
+									target.sendMessage(ChatColor.RED+"Vous avez reçu un avertissement pour "+args[2]);
+								}
 								//-------------------------------
 								//SYSTEME AVERTISSEMENT A TERMINER
 								//-------------------------------
