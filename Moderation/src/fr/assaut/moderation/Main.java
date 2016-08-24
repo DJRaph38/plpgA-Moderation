@@ -5,8 +5,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-
-
 public class Main extends JavaPlugin{
 
 	
@@ -25,7 +23,8 @@ public class Main extends JavaPlugin{
 		
 		//CONNEXION D'UN MODERATEUR, ADMIN, SM, YOUTUBEUR A AJOUTER
 		Bukkit.getPluginManager().registerEvents(new PluginListener(),this); //************************************************* HERE WE GO
-
+		//INTERDIRE LE /pl OU /plugins
+		Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocess(),this);
 	}
 	
 	
