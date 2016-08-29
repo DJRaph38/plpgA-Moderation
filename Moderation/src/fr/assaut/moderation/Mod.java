@@ -1,24 +1,34 @@
 package fr.assaut.moderation;
 
+import java.util.LinkedList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 
-public class Mod implements CommandExecutor {
+public class Mod implements CommandExecutor,Listener{
 
+	
+	
 	// ----------------------------------------------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------------------------------------------
-	public String HELP_MESSAGE = ChatColor.RED+"Erreur, tentez /mod <OPT> <ARGS> !";
+	public String HELP_MESSAGE = ChatColor.RED+"Erreur, tentez /mod <avert/kick/ban/mute> <Pseudo> {<Durée>} <Raison> !";
 	public String HELP_MESSAGE_AVERT = ChatColor.RED+"Erreur, tentez /mod avert <Pseudo> <Raison> !";
 	public String HELP_MESSAGE_BAN = ChatColor.RED+"Erreur, tentez /mod ban <Pseudo> <Durée> <Raison> !";
 	public String HELP_MESSAGE_KICK = ChatColor.RED+"Erreur, tentez /mod kick <Pseudo> <Raison> !";
 	public String HELP_MESSAGE_MUTE = ChatColor.RED+"Erreur, tentez /mod mute <Pseudo> <Durée> <Raison>!";
 	public String OFFLINE_TARGET_PLAYER_MESSAGE = ChatColor.RED+"Erreur, joueur non connecté, tentez via le backend !";
 	public String NO_PERMISSION_MESSAGE = ChatColor.DARK_RED+"Vous n'avez pas les droits pour effectuer ceci !";
-	public String STAFF_MESSAGE = ChatColor.RED+"Vous ne pouvez donnez cette punition à un membre de l'équipe !";
+	public String STAFF_MESSAGE = ChatColor.RED+"Vous ne pouvez donner cette punition à un membre de l'équipe !";
+	public static int task;
+	public static int seconds;
+	public static Player muted;
+	public String mute;
+	public static LinkedList<String> mutedPlayers = new LinkedList<String>();	
 	// ----------------------------------------------------------------------------------------------------------------
 	@SuppressWarnings("unused")
 	// ----------------------------------------------------------------------------------------------------------------
@@ -74,9 +84,11 @@ public class Mod implements CommandExecutor {
 									}else{
 										target.sendMessage(ChatColor.RED+"Vous avez reçu un avertissement pour "+ message);
 									}
-									//-------------------------------
-									//SYSTEME AVERTISSEMENT A TERMINER
-									//-------------------------------
+									/**
+									 * 
+									 *       SYSTEME AVERTISSEMENT A TERMINER
+									 * 
+									 */
 								}
 							}else{
 								p.sendMessage(STAFF_MESSAGE);
@@ -116,9 +128,11 @@ public class Mod implements CommandExecutor {
 										}
 									}
 									//target.setBanned(true);
-								    //-----------
-									// CONTINUER
-								    //-----------
+								    /**
+								     * 
+								     *     SYSTEME BAN A TERMINER
+								     * 
+								     */
 								}
 							}else{
 								p.sendMessage(STAFF_MESSAGE);
@@ -197,17 +211,43 @@ public class Mod implements CommandExecutor {
 								if(target == null){
 									p.sendMessage(ChatColor.RED+OFFLINE_TARGET_PLAYER_MESSAGE);
 								}else{
-									p.sendMessage(ChatColor.DARK_PURPLE+"Vous avez donné le silence chez "+args[1]+" pour "+message+" pendant "+args[2]+"s");
+									p.sendMessage(ChatColor.DARK_PURPLE+"Vous avez donné le silence chez "+args[1]+" pour "+message+" pendant "+args[2]+"mn/s");
 									for(Player pls : Bukkit.getOnlinePlayers()){
 										if(pls.hasPermission("moderation.access")){
-											pls.sendMessage(ChatColor.DARK_PURPLE+p.getName()+" a réduit au silence "+target.getName()+" pour "+message+" pendant "+args[2]+"s");
+											pls.sendMessage(ChatColor.DARK_PURPLE+p.getName()+" a réduit au silence "+target.getName()+" pour "+message+" pendant "+args[2]+"mn/s");
 										}
-									}
-									target.sendMessage(ChatColor.RED+"Vous ne pouvez plus parler pendant "+args[3]+"s ! motif : "+args[2]);
-									 //--------------
-									 // FINIR LE MUTE
-									 //--------------
-									//int tempsMute = Integer.parseInt(args[3]);
+									}										
+										//alias
+									if(args[3].equalsIgnoreCase("LI")){
+										target.sendMessage(ChatColor.RED+"Vous ne pouvez plus parler pendant "+args[2]+"mn ! Motif : Langage inapproprié");
+									}else if(args[3].equalsIgnoreCase("ECT")){
+										target.sendMessage(ChatColor.RED+"Vous ne pouvez plus parler pendant "+args[2]+"mn ! Motif : Evocation de Cheat dans le Chat");
+									}else if(args[3].equalsIgnoreCase("ACT")){
+										target.sendMessage(ChatColor.RED+"Vous ne pouvez plus parler pendant "+args[2]+"mn ! Motif : Accusation de Cheat dans le Chat");
+									}else{
+										target.sendMessage(ChatColor.RED+"Vous ne pouvez plus parler pendant "+args[2]+"mn ! Motif : "+message);
+									}																		
+										//gestion du temps & conversion !
+									int tempsMute = Integer.parseInt(args[2]);
+									seconds = tempsMute;
+									if(seconds == 1){
+										seconds = 60;
+									}else if(seconds == 2){
+										seconds = 120;
+									}else if(seconds == 3){
+										seconds = 180;
+									}else if(seconds == 4){
+										seconds = 240;
+									}else if(seconds == 5){
+										seconds = 300;
+									}									
+										//lancement du mute
+									muted = target;
+									mute = target.getName();
+									mutedPlayers.add(mute);
+									startCountdown();
+																		
+									
 								}
 							}else{
 								p.sendMessage(STAFF_MESSAGE);
@@ -237,4 +277,33 @@ public class Mod implements CommandExecutor {
 	}
 	// ----------------------------------------------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------------------------------------------
+	/**
+	 * 
+	 * 		Procédures complémentaires (mute)
+	 * 	
+	 */
+	
+	public static void startCountdown() {		
+		task = Bukkit.getScheduler().scheduleSyncRepeatingTask(Bukkit.getPluginManager().getPlugin("Moderation"),new Runnable(){					
+			@Override
+			public void run() {
+				seconds--;
+				if(seconds == 0){
+					muted.sendMessage(ChatColor.RED+"Tu peux de nouveau parler, attention au comportement !");
+					Bukkit.getScheduler().cancelTask(task);
+					mutedPlayers.remove(muted);
+				}							
+			}				
+		},20,20);		
+	}//STARTCOUNTDOWN
+	
+	public static LinkedList<String> getMutedplayers(){
+		return mutedPlayers;
+	}
+
+	public static int getSeconds(){
+		return seconds;
+	}
+	
+	
 }

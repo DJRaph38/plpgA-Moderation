@@ -8,12 +8,14 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PluginListener implements Listener {
 
 	File configFile = new File("plugins/Moderation/PlayerConfig.yml");
 	FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+	
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e){
@@ -42,7 +44,16 @@ public class PluginListener implements Listener {
 		}
 	}//ONPLAYERJOIN
 
-	
+	@EventHandler
+	public void onPlayerChat(AsyncPlayerChatEvent e){
+		if(Mod.getMutedplayers().contains(e.getPlayer().getName())){
+			if(!(Mod.getSeconds() == 0)){
+				e.setCancelled(true);
+				e.getPlayer().sendMessage(ChatColor.RED+"Tu dois attendre "+Mod.getSeconds()+"s avant de parler !");
+			}
+		} 
+		//e.getPlayer().sendMessage("EVENT ok {DEBUG MUTE}");
+	}
 	
 	
 }
