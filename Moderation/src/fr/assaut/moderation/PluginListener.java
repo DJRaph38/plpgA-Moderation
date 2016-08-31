@@ -52,7 +52,6 @@ public class PluginListener implements Listener {
 				e.getPlayer().sendMessage(ChatColor.RED+"Tu dois attendre "+Mod.getSeconds()+"s avant de parler !");
 			}
 		} 
-		//e.getPlayer().sendMessage("EVENT ok {DEBUG MUTE}");
 	}
 	
 	

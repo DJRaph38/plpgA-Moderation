@@ -21,12 +21,11 @@ public class Main extends JavaPlugin{
 		CommandExecutor herve = new Herve();//HERVEBLANCHON
 		getCommand("herve").setExecutor(herve);
 		
+		
 		//CONNEXION D'UN MODERATEUR, ADMIN, SM, YOUTUBEUR A AJOUTER
 		Bukkit.getPluginManager().registerEvents(new PluginListener(),this); //************************************************* HERE WE GO
 		//INTERDIRE LE /pl OU /plugins
 		Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocess(),this);
-		// Events pour Mute
-		Bukkit.getPluginManager().registerEvents(new Mod(), this);
 	}
 	
 	

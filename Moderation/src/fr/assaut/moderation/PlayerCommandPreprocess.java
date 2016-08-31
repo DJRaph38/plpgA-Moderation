@@ -24,14 +24,15 @@ public class PlayerCommandPreprocess implements Listener{
 				p.sendMessage(ChatColor.GOLD+"Menu d'aide :");
 				p.sendMessage(ChatColor.RED+"---------------------------------------");
 				p.sendMessage("/hub : fait revenir au hub !"+ChatColor.DARK_PURPLE+" Impossible de retourner en jeu à ce moment la.");
+				p.sendMessage("/hat : Te fait devenir quelqu'un de beau !");
 				if(p.hasPermission("moderation.access")){
 					p.sendMessage(ChatColor.DARK_PURPLE+"/mod avert <PSEUDO> <RAISON> : Pas d'espaces pour les raisons, donne un avertissement !");
-					p.sendMessage(ChatColor.DARK_PURPLE+"ALIASES : LI : Langage inapproprié // ECT : Evocation de Cheat dans le Chat // ACT : Accusation de Cheat");
 					if(p.hasPermission("moderation.administrateur") || p.hasPermission("moderation.supermoderateur") || p.hasPermission("moderation.moderateur")){
 						p.sendMessage(ChatColor.DARK_PURPLE+"/mod kick <PSEUDO> <RAISON> : Pas d'espaces pour les raisons, kick un joueur.");
 						p.sendMessage(ChatColor.DARK_PURPLE+"/mod ban <PSEUDO> <RAISON> <DUREE> : Pas d'espaces pour les raisons, ban un joueur.");
 						p.sendMessage(ChatColor.DARK_PURPLE+"/mod mute <PSEUDO> <RAISON> <DUREE> : Pas d'espaces pour les raisons, mute un joueur.");
 					}
+					p.sendMessage(ChatColor.DARK_PURPLE+"ALIASES : LI : Langage inapproprié // ECT : Evocation de Cheat dans le Chat // ACT : Accusation de Cheat");
 				}
 				p.sendMessage(ChatColor.RED+"---------------------------------------");
 			}
