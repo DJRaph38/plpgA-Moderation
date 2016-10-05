@@ -11,7 +11,7 @@ public class Herve implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		Player p = (Player) sender;
-		p.sendMessage(ChatColor.BOLD+"Non mais vraiment ! Prends cette calotte petit étudiant de BASE !");
+		p.sendMessage(ChatColor.BOLD+"Non mais vraiment !! Prends cette calotte petit étudiant de BASE !");
 		return false;
 	}
 
